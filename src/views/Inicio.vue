@@ -17,30 +17,26 @@
                         <b-col sm="6" class="mt-3">
                             <div class="cuadro_foto">
                                 <div class="foto_">
-
+                                    <img :src="`data:image/png;base64,${foto_b64}`" style="width: 100%;height: 100%;" alt="">
                                 </div>
                             </div>
                         </b-col>
 
                         <b-col sm="6" class="mt-3">
                             <div class="cuadro_foto">
-                                <b-button type="button" variant="outline-info" size="sm">Foto</b-button>
+                                <b-button type="button" variant="outline-info" size="sm" @click="abrir_modal">Foto</b-button>
                             </div>    
                         </b-col>
     
                         <b-col sm="12" class="mt-3">
                             <label for="">Cargo</label>
-                            <select class="form-control form-contro-sm" v-model="cargo">
+                            <select class="form-control form-control-sm" v-model="cargo">
                                 <option value="">Selecciona</option>
                                 <option value="pastor">Pastor</option>
                                 <option value="obrero">Obrero</option>
                             </select>
                         </b-col>
-    
-                        <b-col sm="12" class="mt-3">
-                            <label for="">Foto</label>
-                            <b-form-input type="text" size="sm"></b-form-input>
-                        </b-col>
+
                         <b-col sm="6" class="mt-3">
                             <label for="">Nombres</label>
                             <b-form-input type="text" v-model="nombres" size="sm"></b-form-input>
@@ -67,16 +63,28 @@
                     </b-row>
                 </form>
             </b-container>
+
+            <CortarFoto v-if="modal" v-on:cerrar="cerrar_modal" v-on:buffer="cargar_buffer_foto" v-on:b64="cargar_b64_foto" />
+
         </div>
     </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
+import CortarFoto from '../components/CortarFoto.vue'
+
+
 export default {
     name: 'Inicio',
+    components:{
+        CortarFoto
+    },
     data() {
         return {
+            modal: false,
+            foto: '',
+            foto_b64: '',
             cargo: 'pastor',
             nombres: 'romario isai',
             apellidos: 'torres marroquin',
@@ -88,6 +96,7 @@ export default {
 
         guardar(){
             let f = {
+                foto: this.foto,
                 cargo: this.cargo,
                 nombres: this.nombres.toUpperCase().trim(),
                 apellidos: this.apellidos.toUpperCase().trim(),
@@ -97,6 +106,18 @@ export default {
 
             this.guardarDatos(f)
 
+        },
+        abrir_modal(){
+            this.modal = true
+        },
+        cerrar_modal(){
+            this.modal = false
+        },
+        cargar_buffer_foto(buf){
+            this.foto = buf
+        },
+        cargar_b64_foto(b){
+            this.foto_b64 = b
         },
         ...mapActions(['guardarDatos'])
     },
@@ -119,15 +140,14 @@ export default {
             height: calc(100% - 35px);
         }
             .cuadro_foto{
-                
-                height: 150px;
+                height: 185px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
             }
                 .foto_{
-                    width: 96px;
-                    height: 128px;
-                    border: 1px solid blue;
+                    width: 150px;
+                    height: 185px;
+                    border: 1px solid #e9e9e9;
                 }
 </style>
