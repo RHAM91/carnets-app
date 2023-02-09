@@ -69,48 +69,48 @@ app.on('ready', async () => {
 
 // FUNCION QUE GUARDA LOS DATOS EN LAS TABLAS DE ACCESS
 
-// async function queryAccess(datos) {
+async function queryAccess(datos) {
 
-//   if (datos.cargo == 'pastor') {
+  if (datos.cargo == 'pastor') {
 
-//       let IDCPhotoField1 = datos.foto
-//       let IDCNOMBRES = datos.nombres
-//       let IDCAPELLIDOS = datos.apellidos
-//       let IDCTextField1 = datos.iglesia // nombre de iglesia
-//       let IDCTextField2 = datos.pais
+      let IDCPhotoField1 = datos.foto
+      let IDCNOMBRES = datos.nombres
+      let IDCAPELLIDOS = datos.apellidos
+      let IDCTextField1 = datos.iglesia // nombre de iglesia
+      let IDCTextField2 = datos.pais
 
-//       const connection = await odbc.connect(`DSN=carnets_pastores`);
+      const connection = await odbc.connect(`DSN=carnets_pastores`);
       
-//       await connection.query(`
-//                       insert into IDProjectData 
-//                           (IDCNOMBRES, IDCAPELLIDOS, IDCTextField1, IDCTextField2) 
-//                           values
-//                               ('${IDCNOMBRES}', '${IDCAPELLIDOS}', '${IDCTextField1}', '${IDCTextField2}')
-//                           `);
+      await connection.query(`
+                      insert into IDProjectData 
+                          (IDCNOMBRES, IDCAPELLIDOS, IDCTextField1, IDCTextField2) 
+                          values
+                              ('${IDCNOMBRES}', '${IDCAPELLIDOS}', '${IDCTextField1}', '${IDCTextField2}')
+                          `);
   
-//       await connection.close();
+      await connection.close();
 
-//   }else{
+  }else{
 
-//       let IDCPhotoField1 = datos.foto
-//       let IDCNOMBRE = datos.nombres
-//       let IDCAPELLIDO = datos.apellidos
-//       let IDCDEPARTAMENT = datos.iglesia // nombre de iglesia
-//       let IDCPAIS = datos.pais
+      let IDCPhotoField1 = datos.foto
+      let IDCNOMBRE = datos.nombres
+      let IDCAPELLIDO = datos.apellidos
+      let IDCDEPARTAMENT = datos.iglesia // nombre de iglesia
+      let IDCPAIS = datos.pais
 
-//       const connection = await odbc.connect(`DSN=carnets_obreros`);
+      const connection = await odbc.connect(`DSN=carnets_obreros`);
       
-//       await connection.query(`
-//                       insert into IDProjectData 
-//                           (IDCNOMBRE, IDCAPELLIDO, IDCDEPARTAMENT, IDCPAIS) 
-//                           values
-//                               ('${IDCNOMBRE}', '${IDCAPELLIDO}', '${IDCDEPARTAMENT}', '${IDCPAIS}')
-//                           `);
+      await connection.query(`
+                      insert into IDProjectData 
+                          (IDCNOMBRE, IDCAPELLIDO, IDCDEPARTAMENT, IDCPAIS) 
+                          values
+                              ('${IDCNOMBRE}', '${IDCAPELLIDO}', '${IDCDEPARTAMENT}', '${IDCPAIS}')
+                          `);
   
-//       await connection.close();
-//   }
+      await connection.close();
+  }
 
-// }
+}
 
 
 
