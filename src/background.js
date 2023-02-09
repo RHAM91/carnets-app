@@ -1,9 +1,11 @@
 'use strict'
 
-import { app, protocol, BrowserWindow } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
+const odbc = require('odbc')
+const moment = require('moment')
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -63,6 +65,57 @@ app.on('ready', async () => {
     }
   }
   createWindow()
+})
+
+// FUNCION QUE GUARDA LOS DATOS EN LAS TABLAS DE ACCESS
+
+async function queryAccess(datos) {
+
+  if (datos.cargo == 'pastor') {
+
+      let IDCNOMBRES = datos.nombres
+      let IDCAPELLIDOS = datos.apellidos
+      let IDCTextField1 = datos.iglesia // nombre de iglesia
+      let IDCTextField2 = datos.pais
+
+      const connection = await odbc.connect(`DSN=carnets_pastores`);
+      
+      await connection.query(`
+                      insert into IDProjectData 
+                          (IDCNOMBRES, IDCAPELLIDOS, IDCTextField1, IDCTextField2) 
+                          values
+                              ('${IDCNOMBRES}', '${IDCAPELLIDOS}', '${IDCTextField1}', '${IDCTextField2}')
+                          `);
+  
+      await connection.close();
+
+  }else{
+    
+      let IDCNOMBRE = datos.nombres
+      let IDCAPELLIDO = datos.apellidos
+      let IDCDEPARTAMENT = datos.iglesia // nombre de iglesia
+      let IDCPAIS = datos.pais
+
+      const connection = await odbc.connect(`DSN=carnets_obreros`);
+      
+      await connection.query(`
+                      insert into IDProjectData 
+                          (IDCNOMBRE, IDCAPELLIDO, IDCDEPARTAMENT, IDCPAIS) 
+                          values
+                              ('${IDCNOMBRE}', '${IDCAPELLIDO}', '${IDCDEPARTAMENT}', '${IDCPAIS}')
+                          `);
+  
+      await connection.close();
+  }
+
+}
+
+
+
+
+ipcMain.handle('informacion', async(event, args)=>{
+  await queryAccess(args)
+  return {message: 'Datos guardados!'}
 })
 
 // Exit cleanly on request from parent process in development mode.
