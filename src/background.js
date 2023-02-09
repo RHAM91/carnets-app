@@ -83,9 +83,9 @@ async function queryAccess(datos) {
       
       await connection.query(`
                       insert into IDProjectData 
-                          (IDCNOMBRES, IDCAPELLIDOS, IDCTextField1, IDCTextField2) 
+                          (IDCPhotoField1, IDCNOMBRES, IDCAPELLIDOS, IDCTextField1, IDCTextField2) 
                           values
-                              ('${IDCNOMBRES}', '${IDCAPELLIDOS}', '${IDCTextField1}', '${IDCTextField2}')
+                              (${IDCPhotoField1},'${IDCNOMBRES}', '${IDCAPELLIDOS}', '${IDCTextField1}', '${IDCTextField2}')
                           `);
   
       await connection.close();
@@ -102,9 +102,9 @@ async function queryAccess(datos) {
       
       await connection.query(`
                       insert into IDProjectData 
-                          (IDCNOMBRE, IDCAPELLIDO, IDCDEPARTAMENT, IDCPAIS) 
+                          (IDCPhotoField1, IDCNOMBRE, IDCAPELLIDO, IDCDEPARTAMENT, IDCPAIS) 
                           values
-                              ('${IDCNOMBRE}', '${IDCAPELLIDO}', '${IDCDEPARTAMENT}', '${IDCPAIS}')
+                              (${IDCPhotoField1},'${IDCNOMBRE}', '${IDCAPELLIDO}', '${IDCDEPARTAMENT}', '${IDCPAIS}')
                           `);
   
       await connection.close();
