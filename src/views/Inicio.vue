@@ -13,6 +13,20 @@
                                 Formulario
                             </h2>
                         </b-col>
+
+                        <b-col sm="6" class="mt-3">
+                            <div class="cuadro_foto">
+                                <div class="foto_">
+
+                                </div>
+                            </div>
+                        </b-col>
+
+                        <b-col sm="6" class="mt-3">
+                            <div class="cuadro_foto">
+                                <b-button type="button" variant="outline-info" size="sm">Foto</b-button>
+                            </div>    
+                        </b-col>
     
                         <b-col sm="12" class="mt-3">
                             <label for="">Cargo</label>
@@ -104,4 +118,16 @@ export default {
             width: 100%;
             height: calc(100% - 35px);
         }
+            .cuadro_foto{
+                
+                height: 150px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+                .foto_{
+                    width: 96px;
+                    height: 128px;
+                    border: 1px solid blue;
+                }
 </style>

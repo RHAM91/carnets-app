@@ -90,7 +90,7 @@ async function queryAccess(datos) {
       await connection.close();
 
   }else{
-    
+
       let IDCNOMBRE = datos.nombres
       let IDCAPELLIDO = datos.apellidos
       let IDCDEPARTAMENT = datos.iglesia // nombre de iglesia
@@ -114,7 +114,8 @@ async function queryAccess(datos) {
 
 
 ipcMain.handle('informacion', async(event, args)=>{
-  await queryAccess(args)
+  //await queryAccess(args)
+  console.log(args)
   return {message: 'Datos guardados!'}
 })
 
