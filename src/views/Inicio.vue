@@ -113,7 +113,6 @@ export default {
                 this.nombres = ''
                 this.apellidos = ''
                 this.iglesia = ''
-                this.pais = ''
                 document.getElementById('nombres').focus()
                 
             }
