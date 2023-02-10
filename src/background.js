@@ -15,8 +15,8 @@ protocol.registerSchemesAsPrivileged([
 async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 1024,
-    height: 700,
+    width: 450,
+    height: 640,
     webPreferences: {
       
       // Use pluginOptions.nodeIntegration, leave this alone
@@ -73,7 +73,7 @@ async function queryAccess(datos) {
 
   if (datos.cargo == 'pastor') {
 
-      let IDCPhotoField1 = datos.foto
+      // let IDCPhotoField1 = datos.foto
       let IDCNOMBRES = datos.nombres
       let IDCAPELLIDOS = datos.apellidos
       let IDCTextField1 = datos.iglesia // nombre de iglesia
@@ -83,16 +83,16 @@ async function queryAccess(datos) {
       
       await connection.query(`
                       insert into IDProjectData 
-                          (IDCPhotoField1, IDCNOMBRES, IDCAPELLIDOS, IDCTextField1, IDCTextField2) 
+                          (IDCNOMBRES, IDCAPELLIDOS, IDCTextField1, IDCTextField2) 
                           values
-                              (${IDCPhotoField1},'${IDCNOMBRES}', '${IDCAPELLIDOS}', '${IDCTextField1}', '${IDCTextField2}')
+                              ('${IDCNOMBRES}', '${IDCAPELLIDOS}', '${IDCTextField1}', '${IDCTextField2}')
                           `);
   
       await connection.close();
 
   }else{
 
-      let IDCPhotoField1 = datos.foto
+      // let IDCPhotoField1 = datos.foto
       let IDCNOMBRE = datos.nombres
       let IDCAPELLIDO = datos.apellidos
       let IDCDEPARTAMENT = datos.iglesia // nombre de iglesia
@@ -102,9 +102,9 @@ async function queryAccess(datos) {
       
       await connection.query(`
                       insert into IDProjectData 
-                          (IDCPhotoField1, IDCNOMBRE, IDCAPELLIDO, IDCDEPARTAMENT, IDCPAIS) 
+                          (IDCNOMBRE, IDCAPELLIDO, IDCDEPARTAMENT, IDCPAIS) 
                           values
-                              (${IDCPhotoField1},'${IDCNOMBRE}', '${IDCAPELLIDO}', '${IDCDEPARTAMENT}', '${IDCPAIS}')
+                              ('${IDCNOMBRE}', '${IDCAPELLIDO}', '${IDCDEPARTAMENT}', '${IDCPAIS}')
                           `);
   
       await connection.close();
@@ -116,6 +116,8 @@ async function queryAccess(datos) {
 
 
 ipcMain.handle('informacion', async(event, args)=>{
+  
+  //console.log(args)
   await queryAccess(args)
   return {message: 'Datos guardados!'}
 })

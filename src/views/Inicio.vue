@@ -14,10 +14,10 @@
                             </h2>
                         </b-col>
 
-                        <b-col sm="6" class="mt-3">
+                        <!-- <b-col sm="6" class="mt-3">
                             <div class="cuadro_foto">
                                 <div class="foto_">
-                                    <img :src="`data:image/png;base64,${foto_b64}`" style="width: 100%;height: 100%;" alt="">
+                                    <img :src="`${foto_b64}`" style="width: 100%;height: 100%;" alt="">
                                 </div>
                             </div>
                         </b-col>
@@ -26,7 +26,7 @@
                             <div class="cuadro_foto">
                                 <b-button type="button" variant="outline-info" size="sm" @click="abrir_modal">Foto</b-button>
                             </div>    
-                        </b-col>
+                        </b-col> -->
     
                         <b-col sm="12" class="mt-3">
                             <label for="">Cargo</label>
@@ -39,7 +39,7 @@
 
                         <b-col sm="6" class="mt-3">
                             <label for="">Nombres</label>
-                            <b-form-input type="text" v-model="nombres" size="sm"></b-form-input>
+                            <b-form-input type="text" id="nombres" v-model="nombres" size="sm"></b-form-input>
                         </b-col>
     
                         <b-col sm="6" class="mt-3">
@@ -85,10 +85,10 @@ export default {
             modal: false,
             foto: '',
             foto_b64: '',
-            cargo: 'pastor',
-            nombres: 'romario isai',
-            apellidos: 'torres marroquin',
-            iglesia: 'jabneel',
+            cargo: '',
+            nombres: '',
+            apellidos: '',
+            iglesia: '',
             pais: 'guatemala'
         }
     },
@@ -105,6 +105,11 @@ export default {
             }
 
             this.guardarDatos(f)
+            this.nombres = ''
+            this.apellidos = ''
+            this.iglesia = ''
+            this.pais = ''
+            document.getElementById('nombres').focus()
 
         },
         abrir_modal(){
@@ -120,6 +125,9 @@ export default {
             this.foto_b64 = b
         },
         ...mapActions(['guardarDatos'])
+    },
+    mounted() {
+        document.getElementById('nombres').focus()
     },
 }
 </script>

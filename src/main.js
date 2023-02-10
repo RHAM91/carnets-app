@@ -6,7 +6,6 @@ import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import 'cropperjs/dist/cropper.css';
 
 Vue.config.productionTip = false
 

@@ -24,7 +24,7 @@ export default new Vuex.Store({
   actions: {
     async guardarDatos({commit, state, dispatch}, data){
       let r = await ipcRenderer.invoke('informacion', data)
-      minix({icon: 'success', mensaje: r.message, tiempo: 3000})
+      minix({icon: 'success', mensaje: r.message, tiempo: 2000})
       
     }
   },

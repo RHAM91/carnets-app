@@ -13,23 +13,11 @@
 
                 <b-col sm="12" class="mt-3">
                     <div class="area_de_corte">
-                        <VueCropper
-
-                            ref="cropper"
-                            :guides="true"
-                            :viewMode="0"
-                            drag-mode="move"
-                            :cropBoxMovable="false"
-                            :cropBoxResizable="false"
-                            :auto-crop-area="0.4"
-                            :minCropBoxWidth="200"
-                            :minCropBoxHeight="250"
-                            :background="true"
-                            :rotatable="true"
-                            :src="imgSrc"
-                            alt="Fuente"
-                            :img-style="{ width: '500px', height: '550px' }"                
-                        />
+                       <cropper
+                        class="crooper"
+                        :src="imgSrc"
+                        ref="cropper"
+                       ></cropper>
                     </div>
                 </b-col>
                 
@@ -64,17 +52,29 @@
 
 <script>
 
-import VueCropper from 'vue-cropperjs'
+// import VueCropper from 'vue-cropperjs'
+
+import { Cropper } from 'vue-advanced-cropper'
+import 'vue-advanced-cropper/dist/style.css'
+
 
 export default {
     name: 'CortarFoto',
     components:{
-        VueCropper
+        Cropper
     },
     data() {
         return {
             imgSrc: "",
-            cropImg: ""
+            cropImg: "",
+            buffer_foto: '',
+            coordinates: {
+                width: 0,
+                heigth: 0,
+                left: 0,
+                top: 0
+            },
+            image: null
         }
     },
     methods: {
@@ -104,25 +104,24 @@ export default {
             }
 
         },
-
-        base64ToArrayBuffer(){
-            let binary_string = window.atob(this.cropImg)
-            let len = binary_string.length
-            let bytes = new Uint8Array(len)
-            for (let i = 0; i < len; i++) {
-                bytes[i] = binary_string.charCodeAt(i)
-                
-            }
-
-            return bytes.buffer
+        ajuste({coordinates, image, visibleArea, canvas}){
+            this.buffer_foto = image.src
         },
         async cropImage() {
-            // get image data for post processing, e.g. upload or setting image src
-            this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL('image/png').replace(/^data:image\/(png|jpg|jpeg);base64,/, '')
 
-            let bytesArray = this.base64ToArrayBuffer()
-            this.$emit('buffer', bytesArray)
-            this.$emit('b64', this.cropImg)
+            const { coordinates, image, canvas } = this.$refs.cropper.getResult()
+            this.coordinates = coordinates
+
+            //this.image = canvas.toDataURL()
+
+            this.image = image.src
+
+            // get image data for post processing, e.g. upload or setting image src
+            // let f = this.$refs.cropper.getCroppedCanvas().toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, "")
+
+
+            this.$emit('buffer', this.image.split(',')[1])
+            this.$emit('b64', this.image)
             this.salir()
         },
         rotate() {
@@ -135,6 +134,12 @@ export default {
 </script>
     
 <style>
+    .cropper {
+        height: 600px;
+        width: 600px;
+        background: #DDD;
+    }
+
     .contenedor_foto{
         width: 100%;
         height: 100%;
