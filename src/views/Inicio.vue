@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import { minix } from '@/components/functions/alertas'
 import { mapActions } from 'vuex'
 import CortarFoto from '../components/CortarFoto.vue'
 
@@ -95,21 +96,27 @@ export default {
     methods: {
 
         guardar(){
-            let f = {
-                foto: this.foto,
-                cargo: this.cargo,
-                nombres: this.nombres.toUpperCase().trim(),
-                apellidos: this.apellidos.toUpperCase().trim(),
-                iglesia: this.iglesia.toUpperCase().trim(),
-                pais: this.pais.toUpperCase().trim()
-            }
+            if (this.cargo == '' || this.nombres == '' || this.apellidos == '' || this.iglesia == '' || this.pais == '') {
+                minix({icon: 'error', mensaje: 'Todos los campos debene estar llenos', tiempo: 2000})
 
-            this.guardarDatos(f)
-            this.nombres = ''
-            this.apellidos = ''
-            this.iglesia = ''
-            this.pais = ''
-            document.getElementById('nombres').focus()
+            }else{
+                let f = {
+                    foto: this.foto,
+                    cargo: this.cargo,
+                    nombres: this.nombres.toUpperCase().trim(),
+                    apellidos: this.apellidos.toUpperCase().trim(),
+                    iglesia: this.iglesia.toUpperCase().trim(),
+                    pais: this.pais.toUpperCase().trim()
+                }
+    
+                this.guardarDatos(f)
+                this.nombres = ''
+                this.apellidos = ''
+                this.iglesia = ''
+                this.pais = ''
+                document.getElementById('nombres').focus()
+                
+            }
 
         },
         abrir_modal(){
