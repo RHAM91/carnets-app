@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, ipcMain } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain, dialog } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
@@ -75,12 +75,13 @@ async function queryAccess(datos) {
 
   if (datos.cargo == 'pastor') {
 
+    try {
       // let IDCPhotoField1 = datos.foto
       let IDCNOMBRES = datos.nombres
       let IDCAPELLIDOS = datos.apellidos
       let IDCTextField1 = datos.iglesia // nombre de iglesia
       let IDCTextField2 = datos.pais
-
+  
       const connection = await odbc.connect(`DSN=carnets_pastores`);
       
       await connection.query(`
@@ -90,16 +91,35 @@ async function queryAccess(datos) {
                               ('${IDCNOMBRES}', '${IDCAPELLIDOS}', '${IDCTextField1}', '${IDCTextField2}')
                           `);
   
-      await connection.close();
+      //await connection.close();
+      
+    } catch (error) {
+      const dialogOpts = {
+        type: 'info',
+        buttons: ['Entendido'],
+        title: 'Error',
+        message: `Error`,
+        detail: error
+      }
+
+      dialog.showMessageBox(dialogOpts).then(({ response }) => {
+        if (response === 0) {
+          
+        }
+      })
+    }
+
 
   }else{
 
+    try {
+      
       // let IDCPhotoField1 = datos.foto
       let IDCNOMBRE = datos.nombres
       let IDCAPELLIDO = datos.apellidos
       let IDCDEPARTAMENT = datos.iglesia // nombre de iglesia
       let IDCPAIS = datos.pais
-
+  
       const connection = await odbc.connect(`DSN=carnets_obreros`);
       
       await connection.query(`
@@ -109,7 +129,23 @@ async function queryAccess(datos) {
                               ('${IDCNOMBRE}', '${IDCAPELLIDO}', '${IDCDEPARTAMENT}', '${IDCPAIS}')
                           `);
   
-      await connection.close();
+      //await connection.close();
+    } catch (error) {
+      const dialogOpts = {
+        type: 'info',
+        buttons: ['Entendido'],
+        title: 'Error',
+        message: `Error`,
+        detail: error
+      }
+
+      dialog.showMessageBox(dialogOpts).then(({ response }) => {
+        if (response === 0) {
+
+        }
+      })
+    }
+
   }
 
 }

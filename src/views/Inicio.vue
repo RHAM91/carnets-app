@@ -100,20 +100,24 @@ export default {
                 minix({icon: 'error', mensaje: 'Todos los campos debene estar llenos', tiempo: 2000})
 
             }else{
-                let f = {
-                    foto: this.foto,
-                    cargo: this.cargo,
-                    nombres: this.nombres.toUpperCase().trim(),
-                    apellidos: this.apellidos.toUpperCase().trim(),
-                    iglesia: this.iglesia.toUpperCase().trim(),
-                    pais: this.pais.toUpperCase().trim()
+                if (this.iglesia.length > 20 || this.pais.length > 21) {
+                    minix({icon: 'info', mensaje: 'El texto es muy grande', tiempo: 2000})
+                }else{
+                    let f = {
+                        foto: this.foto,
+                        cargo: this.cargo,
+                        nombres: this.nombres.toUpperCase().trim(),
+                        apellidos: this.apellidos.toUpperCase().trim(),
+                        iglesia: this.iglesia.toUpperCase().trim(),
+                        pais: this.pais.toUpperCase().trim()
+                    }
+        
+                    this.guardarDatos(f)
+                    this.nombres = ''
+                    this.apellidos = ''
+                    this.iglesia = ''
+                    document.getElementById('nombres').focus()
                 }
-    
-                this.guardarDatos(f)
-                this.nombres = ''
-                this.apellidos = ''
-                this.iglesia = ''
-                document.getElementById('nombres').focus()
                 
             }
 
